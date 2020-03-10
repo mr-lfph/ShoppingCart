@@ -83,11 +83,18 @@
       const Remove1 = document.getElementById("imageRemove1");
       Remove1.addEventListener("click", function () {
          removeItem("cart1");
+         document.getElementById("Price1").innerText=0;
+        document.getElementById("subTotal").innerText=Subtotal();
+         document.getElementById("Total").innerText=Subtotal();  
 
       })
       const Remove2 = document.getElementById("imageRemove2");
       Remove2.addEventListener("click", function () {
          removeItem("cart2");
+        document.getElementById("Price2").innerText=0;
+         document.getElementById("subTotal").innerText=Subtotal();
+         document.getElementById("Total").innerText=Subtotal();  
+
       })
       const btnPlus1 = document.getElementById("btnPlus1");
       const btnMinus1 = document.getElementById("btnMinus1");
