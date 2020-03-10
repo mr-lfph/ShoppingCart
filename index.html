@@ -10,14 +10,14 @@
    <link href="style.css" rel="stylesheet">
 </head>
 
-<body>
+<body onload="onload()">
 
    <section>
       <div class="container">
          <div class="cart">
-            <div class="col-md-12 col-lg-10 mx-auto">
-               <div class="cart-item">
-                  <div class="row">
+            <div  class="col-md-12 col-lg-10 mx-auto">
+               <div class="cart-item" id="cart1">
+                  <div class="row" >
                      <div class="col-md-7 center-item">
                         <img src="images/product-1.png" alt="">
                         <h5>iPhone 11 128GB Black</h5>
@@ -25,17 +25,18 @@
 
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input type="text" class="form-control text-center" value="1">
-                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button id="btnMinus1" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input type="text" id="qty1" class="form-control text-center" value="1">
+                           <button id="btnPlus1" class="btn btn-default"><i class="fas fa-plus"></i></button>
                         </div>
-                        <h5>$1219</h5>
-                        <img src="images/remove.png" alt="" class="remove-item">
+                        <span id="basePrice1">1219</span>
+                        <h5> $<span id="Price1" >1219</span> </h5>
+                        <img id="imageRemove1" src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
                </div>
 
-               <div class="cart-item">
+               <div class="cart-item" id="cart2">
                   <div class="row">
                      <div class="col-md-7 center-item mx-auto">
                         <img src="images/product-2.png" alt="">
@@ -43,20 +44,20 @@
                      </div>
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input type="text" class="form-control text-center" value="1">
-                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button id="btnMinus2" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input type="text" id="qty2" class="form-control text-center" value="1">
+                           <button id="btnPlus2" class="btn btn-default"><i class="fas fa-plus"></i></button>
 
                         </div>
-                        <h5>$59</h5>
-                        <img src="images/remove.png" alt="" class="remove-item">
+                        <span id="basePrice2">59</span>
+                        <h5>$<span id="Price2">59</span></h5>
+                        <img id="imageRemove2" src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
                </div>
 
                <div class="cart-item">
                   <div class="row">
-
                      <div class="col-md-8">
                         <h5>Subtotal: </h5>
                         <h5>Tax:</h5>
@@ -64,19 +65,113 @@
                      </div>
 
                      <div class="col-md-4 status">
-                        <h5>$1,278</h5>
+                        <h5><span id="subTotal" onload="Subtotal()"></span></h5>
                         <h5>$0</h5>
-                        <h5>$1,278</h5>
+                        <h5><span id="Total" onload="Subtotal()"></span></h5>
                      </div>
                   </div>
                </div>
                <div class="col-md-12 pt-4 pb-4">
-                  <button type="button" class="btn btn-success check-out">Check Out</button>
+                  <button type="button" id="btnCheckOut" class="btn btn-success check-out">Check Out</button>
                </div>
             </div>
          </div>
       </div>
    </section>
+   <script>
+
+      const Remove1 = document.getElementById("imageRemove1");
+      Remove1.addEventListener("click", function () {
+         removeItem("cart1");
+
+      })
+      const Remove2 = document.getElementById("imageRemove2");
+      Remove2.addEventListener("click", function () {
+         removeItem("cart2");
+      })
+      const btnPlus1 = document.getElementById("btnPlus1");
+      const btnMinus1 = document.getElementById("btnMinus1");
+      btnPlus1.addEventListener("click", function () {
+         document.getElementById("qty1").value = getNumber("qty1") + 1;
+         getPrice("basePrice1", "qty1", "Price1");
+      })
+
+      btnMinus1.addEventListener("click", function () {
+         var qty = getNumber("qty1") - 1;
+         if (qty < 1)
+            qty = 1;
+         document.getElementById("qty1").value = qty;
+         getPrice("basePrice1", "qty1", "Price1");
+      })
+
+      const checkOut=document.getElementById("btnCheckOut");
+      checkOut.addEventListener("click",function(){
+         alert('Order Created Successfully!! Thank you ! ');
+      })
+
+      qty1.addEventListener("change", function () {
+         getPrice("basePrice1", "qty1", "Price1");
+      })
+
+      const btnPlus2 = document.getElementById("btnPlus2");
+      const btnMinus2 = document.getElementById("btnMinus2");
+      
+      btnPlus2.addEventListener("click", function () {
+         document.getElementById("qty2").value = getNumber("qty2") + 1;
+         getPrice("basePrice2", "qty2", "Price2");
+      })
+
+      btnMinus2.addEventListener("click", function () {
+         var qty = getNumber("qty2") - 1;
+         if (qty < 1)
+            qty = 1;
+         document.getElementById("qty2").value = qty;
+         getPrice("basePrice2", "qty2", "Price2");
+      })
+
+      qty2.addEventListener("change", function () {
+         getPrice("basePrice2", "qty2", "Price2");
+      })
+
+      function removeItem(divID) {
+         const removableItem = document.getElementById(divID);
+         removableItem.style.display = "none";
+      }
+
+      function getNumber(ID) {
+         var numberID = document.getElementById(ID).value;
+         numberID = parseFloat(numberID);
+         return numberID;
+      }
+      function getNumberSpan(ID) {
+         var numberID = document.getElementById(ID).innerText;
+         numberID = parseFloat(numberID)
+         return numberID;
+      }
+      function Qty(qty) {
+         if (qty < 1)
+            return qty = 1;
+         return qty;
+      }
+      function getPrice(basePrice, Quantity, Price) {
+         document.getElementById(Price).innerText = getNumberSpan(basePrice) * getNumber(Quantity);
+         document.getElementById("subTotal").innerText=Subtotal();
+         document.getElementById("Total").innerText=Subtotal();         
+      }
+      
+      function onload()
+      {
+         document.getElementById("subTotal").innerText=Subtotal();
+         document.getElementById("Total").innerText=Subtotal(); 
+      }
+      function Subtotal(){
+         const price1=document.getElementById("Price1").innerText;
+         const price2=document.getElementById("Price2").innerText;
+         const Subtotal=parseFloat(price1)+parseFloat(price2);
+        return Subtotal;
+      }
+
+   </script>
 </body>
 
 </html>

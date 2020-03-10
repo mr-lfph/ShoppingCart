@@ -53,3 +53,7 @@ body{
 	background-color: #2FBE70;
 	border: none;
 }
+#basePrice1, #basePrice2
+{
+	display: none;
+}
